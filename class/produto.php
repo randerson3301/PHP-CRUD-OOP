@@ -49,9 +49,30 @@ class Produto{
         } else {
             return false;
         }
-        
+    }
 
+    //function para trazer todos os registros com LIMIT pré-defenido
+    function readAll($from_rec_num, $reg_por_page){
 
+        $query = "SELECT * FROM ". $this->table_name ."
+        ORDER BY c_nomeprod LIMIT {$from_rec_num},{$reg_por_page}";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    //retorna o número de registros dentro da table
+    public function countAll(){
+        $query = "SELECT n_idprod FROM ". $this->table_name . "";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        $num = $stmt->rowCount();
+
+        return $num;
 
     }
 }
